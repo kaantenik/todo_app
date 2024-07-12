@@ -1,9 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mx-auto px-4 py-8">
+  <% if notice.present? %>
+    <p class="text-green-500"><%= notice %></p>
+  <% end %>
 
-<%= render @task %>
+  <%= render @task %>
 
-<div>
-  <%= link_to "Edit this task", edit_task_path(@task) %> |
-  <%= link_to "Back to tasks", tasks_path %> |
-  <%= button_to "Destroy this task", @task, method: :delete %>
+  <div class="flex justify-center mt-4 space-x-4">
+    <%= link_to "Görevi Düzenle", edit_task_path(@task), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= link_to "Görev Listesine Geri Dön", tasks_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= button_to "Görevi Sil", @task, method: :delete, data: { confirm: 'Emin misiniz?' }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
 </div>

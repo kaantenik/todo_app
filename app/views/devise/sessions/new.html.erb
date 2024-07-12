@@ -1,0 +1,24 @@
+<div class="container mx-auto px-4 py-8 max-w-md">
+  <h2 class="text-2xl font-bold text-center mb-6">Giriş Yap</h2>
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true, class: "space-y-4") do |form| %>
+      <div>
+        <%= form.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.email_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div>
+        <%= form.label :password, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div class="flex items-center justify-between">
+        <%= form.submit "Giriş Yap", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+      </div>
+    <% end %>
+    <div class="text-center mt-4">
+      <%= link_to "Şifremi unuttum?", new_password_path(resource_name), class: "text-blue-500 hover:text-blue-700" %>
+    </div>
+    <div class="text-center mt-4">
+      <%= link_to "Kaydol", new_registration_path(resource_name), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    </div>
+  </div>
+</div>

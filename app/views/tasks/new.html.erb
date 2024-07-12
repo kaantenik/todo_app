@@ -1,9 +1,7 @@
-<h1>New task</h1>
+<h1 class="text-3xl font-bold text-center mb-6">Yeni Görev Oluştur</h1>
 
 <%= render "form", task: @task %>
 
-<br>
-
-<div>
-  <%= link_to "Back to tasks", tasks_path %>
+<div class="flex justify-center mt-4">
+  <%= link_to "Görev Listesine Geri Dön", tasks_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
 </div>

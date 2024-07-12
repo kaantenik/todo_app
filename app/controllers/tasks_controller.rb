@@ -3,7 +3,8 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   # GET /tasks or /tasks.json
   def index
-    @tasks = policy_scope(Task)
+    @task = Task.new
+    @tasks = current_user.tasks
   end
 
   # GET /tasks/1 or /tasks/1.json

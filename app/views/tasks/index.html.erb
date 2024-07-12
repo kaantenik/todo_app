@@ -1,20 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-center mb-6">Yapılacaklar Listesi</h1>
 
-<h1>Tasks</h1>
+  <% if user_signed_in? %>
+    <div class="text-center mb-6">
+      <p class="text-green-500"><%= notice %></p>
+      <div> Hoşgeldiniz <%= current_user.email %> </div>
+      <div class="text-right">
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+      </div>
+    </div>
 
-<div id="tasks">
-  <% @tasks.each do |task| %>
-    <%= render task %>
-    <p>
-      <%= link_to "Show this task", task %>
-    </p>
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8 max-w-md mx-auto">
+      <%= form_with model: @task, local: true, class: "space-y-4" do |form| %>
+        <% if @task.errors.any? %>
+          <div class="text-red-500">
+            <h2><%= pluralize(@task.errors.count, "hata") %>:</h2>
+            <ul>
+              <% @task.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div>
+          <%= form.label :title, "Görev", class: "block text-gray-700 text-sm font-bold mb-2" %>
+          <%= form.text_field :title, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+        </div>
+        <div class="flex items-center justify-between">
+          <%= form.submit "Kaydet", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        </div>
+      <% end %>
+    </div>
+
+    <h2 class="text-2xl font-bold text-center mb-4">Görevler</h2>
+    <div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
+      <% @tasks.each do |task| %>
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+              <%= form_with model: task, local: true, html: { class: "inline" } do |form| %>
+                <%= form.check_box :completed, class: "form-checkbox h-5 w-5 text-blue-600", data: { remote: true, method: :patch } %>
+              <% end %>
+              <h3 class="text-xl font-bold ml-2"><%= task.title %></h3>
+            </div>
+            <div class="flex space-x-2">
+              <%= link_to 'Düzenle', edit_task_path(task), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+              <%= button_to 'Sil', task, method: :delete, data: { 'turbo-confirm': 'Bu yazıyı silmek istediğinize emin misiniz?', 'turbo-method': :delete }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= button_to "Sign in", new_user_session_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New task", new_task_path %> |
-<% if user_signed_in? %> 
- <div> Hoşgeldiniz <%= current_user.email %> </div> 
-  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
-<% else %>
-  <%= button_to "Sign in", new_user_session_path %> 
-<% end %>
